@@ -1,26 +1,279 @@
+## Prerequisites
 
-## Get started
-Spin up postgres containers
-```
-make up
-```
+You will need
+* docker
+* docker-compose
+* liquibase
+* pg_dump
+* pg_restore
 
-Get an example database
+
+The example database in database.sql is the paglia database from:
 * https://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip
 
-Restore the database into the paglia database.
+## Get started using existing changelog.xml
+
+Spin up postgres containers
 ```
-PGPASSWORD=pass pg_restore -h 127.0.0.1 -p 5555 -U postgres -d paglia dvdrental.tar
+$ make up  
+docker-compose up -d
+[+] Running 3/3
+ ⠿ Network psql-liquibase_default  Created                                                                                                              0.0s
+ ⠿ Container newdb                 Started                                                                                                              0.3s
+ ⠿ Container paglia                Started                                                                                                              0.3s
 ```
 
-Create a schema only dump.
+Restore the database.
 ```
-make dump_schema
+$ make restore
+PGPASSWORD=pass psql -h 127.0.0.1 -p 5555 -U postgres -d db -f database.sql
+SET
+SET
+SET
+SET
+SET
+...
 ```
 
-Install liquibase
+Log into the paglia database and check that the data is there.
 ```
-brew install liquibase
+$ make paglia 
+docker-compose exec paglia psql -U postgres -d db
+psql (13.5 (Debian 13.5-1.pgdg110+1))
+Type "help" for help.
+
+db=# \dt
+             List of relations
+ Schema |     Name      | Type  |  Owner   
+--------+---------------+-------+----------
+ public | actor         | table | postgres
+ public | address       | table | postgres
+ public | category      | table | postgres
+ public | city          | table | postgres
+ public | country       | table | postgres
+ public | customer      | table | postgres
+ public | film          | table | postgres
+ public | film_actor    | table | postgres
+ public | film_category | table | postgres
+ public | inventory     | table | postgres
+ public | language      | table | postgres
+ public | payment       | table | postgres
+ public | rental        | table | postgres
+ public | staff         | table | postgres
+ public | store         | table | postgres
+(15 rows)
+```
+
+
+Check status for the new database.
+```
+$ make status     
+liquibase status --changelog-file changelog.xml --url jdbc:postgresql://127.0.0.1:6666/db --username postgres --password pass
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##  Free schema change activity reports at        ##
+##      https://hub.liquibase.com                 ##
+##                                                ##
+####################################################
+Starting Liquibase at 13:04:02 (version 4.7.0 #1140 built at 2022-01-07 19:26+0000)
+Liquibase Version: 4.7.0
+Liquibase Community 4.7.0 by Liquibase
+73 change sets have not been applied to postgres@jdbc:postgresql://127.0.0.1:6666/db
+Liquibase command 'status' was executed successfully.
+```
+
+Update the newdb using the generated changelog.
+```
+$ make update
+liquibase update --log-level WARNING --changelog-file changelog.xml --url jdbc:postgresql://127.0.0.1:6666/db --username postgres --password pass
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##  Free schema change activity reports at        ##
+##      https://hub.liquibase.com                 ##
+##                                                ##
+####################################################
+Starting Liquibase at 13:04:24 (version 4.7.0 #1140 built at 2022-01-07 19:26+0000)
+Liquibase Version: 4.7.0
+Liquibase Community 4.7.0 by Liquibase
+Liquibase command 'update' was executed successfully.
+```
+
+Add changelog to the existing (paglia) database.
+```
+$ make changelogSync
+liquibase changelogSync --log-level WARNING --changelog-file changelog.xml --url jdbc:postgresql://127.0.0.1:5555/db --username postgres --password pass
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##  Free schema change activity reports at        ##
+##      https://hub.liquibase.com                 ##
+##                                                ##
+####################################################
+Starting Liquibase at 13:06:30 (version 4.7.0 #1140 built at 2022-01-07 19:26+0000)
+Liquibase Version: 4.7.0
+Liquibase Community 4.7.0 by Liquibase
+Liquibase command 'changelogSync' was executed successfully.
+```
+
+Diff the existing (paglia) and newly created database (newdb).
+```
+$ make lb_diff         
+liquibase \
+                --outputFile=liquibase_diff.txt \
+                --url=jdbc:postgresql://localhost:5555/db \
+                --username=postgres \
+                --password=pass \
+                Diff \
+                --referenceUrl=jdbc:postgresql://localhost:6666/db \
+                --referenceUsername=postgres \
+                --referencePassword=pass
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##  Free schema change activity reports at        ##
+##      https://hub.liquibase.com                 ##
+##                                                ##
+####################################################
+Starting Liquibase at 13:07:09 (version 4.7.0 #1140 built at 2022-01-07 19:26+0000)
+Liquibase Version: 4.7.0
+Liquibase Community 4.7.0 by Liquibase
+
+Diff Results:
+Output saved to /Users/mikalsande/Documents/GitHub/psql-liquibase/liquibase_diff.txt
+Liquibase command 'diff' was executed successfully.
+cat liquibase_diff.txt
+Reference Database: postgres @ jdbc:postgresql://localhost:6666/db (Default Schema: public)
+Comparison Database: postgres @ jdbc:postgresql://localhost:5555/db (Default Schema: public)
+Compared Schemas: public
+Product Name: EQUAL
+Product Version: EQUAL
+Missing Catalog(s): NONE
+Unexpected Catalog(s): NONE
+Changed Catalog(s): NONE
+Missing Column(s): NONE
+Unexpected Column(s): NONE
+Changed Column(s): 
+     public.actor.actor_id
+          defaultValue changed from 'null' to 'nextval('actor_actor_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.address.address_id
+          defaultValue changed from 'null' to 'nextval('address_address_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.category.category_id
+          defaultValue changed from 'null' to 'nextval('category_category_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.city.city_id
+          defaultValue changed from 'null' to 'nextval('city_city_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.country.country_id
+          defaultValue changed from 'null' to 'nextval('country_country_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.customer.customer_id
+          defaultValue changed from 'null' to 'nextval('customer_customer_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.film.film_id
+          defaultValue changed from 'null' to 'nextval('film_film_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.inventory.inventory_id
+          defaultValue changed from 'null' to 'nextval('inventory_inventory_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.language.language_id
+          defaultValue changed from 'null' to 'nextval('language_language_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.payment.payment_id
+          defaultValue changed from 'null' to 'nextval('payment_payment_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.rental.rental_id
+          defaultValue changed from 'null' to 'nextval('rental_rental_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.staff.staff_id
+          defaultValue changed from 'null' to 'nextval('staff_staff_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+     public.store.store_id
+          defaultValue changed from 'null' to 'nextval('store_store_id_seq'::regclass)'
+          type changed from 'int4' to 'serial'
+...
+```
+
+The open source version of liquidbase does not track postgresql functions. For a more complete
+picture of the difference between the original and created database we can diff their schemas.
+```
+$ make diff           
+PGPASSWORD=pass pg_dump -s -Ox -h 127.0.0.1 -p 5555 -U postgres -d db > schema.sql
+PGPASSWORD=pass pg_dump -s -Ox -h 127.0.0.1 -p 6666 -U postgres -d db > new-schema.sql
+colordiff -u schema.sql new-schema.sql
+--- schema.sql  2022-01-16 13:40:29.574832833 +0100
++++ new-schema.sql      2022-01-16 13:40:30.085417253 +0100
+@@ -53,259 +53,6 @@
+ 
+ 
+ --
+--- Name: film_in_stock(integer, integer); Type: FUNCTION; Schema: public; Owner: -
+---
+-
+-CREATE FUNCTION public.film_in_stock(p_film_id integer, p_store_id integer, OUT p_film_count integer) RETURNS SETOF integer
+-    LANGUAGE sql
+-    AS $_$
+-     SELECT inventory_id
+-     FROM inventory
+-     WHERE film_id = $1
+-     AND store_id = $2
+-     AND inventory_in_stock(inventory_id);
+-$_$;
+...
+```
+
+## Generate a new changelog.xml
+
+Start clean.
+```
+make down
+make up
+make restore
+```
+
+Create a schema only dump that we can use to look up missing objects from Liquibase errors.
+```
+$ make dump_schema
+PGPASSWORD=pass pg_dump -s -h 127.0.0.1 -p 5555 -U postgres -d db > schema.sql
 ```
 
 Generate the changelog
@@ -28,17 +281,18 @@ Generate the changelog
 make generate
 ```
 
-Check status for the new database.
-```
-make status
-```
-
-Update the newdb using the generated changelog.
+Try to apply the changelog to an empty database (newdb).
 ```
 make update
 ```
 
 ## Process to create a working changelog
+
+The general process is
+* Run Liquibase update with `make update`
+* Get an error, found the changeSet id
+* Grep after the missing type in `schema.sql`
+* Update `changelog.xml`
 
 ### First error
 Error:

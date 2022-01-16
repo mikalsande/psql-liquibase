@@ -5,7 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="mikalsande (generated)" id="1642327687659-1">
         <createTable tableName="customer">
-            <column autoIncrement="true" name="customer_id" type="INTEGER">
+            <column autoIncrement="true" name="customer_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="customer_pkey"/>
             </column>
             <column name="store_id" type="SMALLINT">
@@ -36,7 +36,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-3">
         <createTable tableName="actor">
-            <column autoIncrement="true" name="actor_id" type="INTEGER">
+            <column autoIncrement="true" name="actor_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
             </column>
             <column name="first_name" type="VARCHAR(45)">
@@ -55,7 +55,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-5">
         <createTable tableName="category">
-            <column autoIncrement="true" name="category_id" type="INTEGER">
+            <column autoIncrement="true" name="category_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="category_pkey"/>
             </column>
             <column name="name" type="VARCHAR(25)">
@@ -100,7 +100,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-10">
         <createTable tableName="address">
-            <column autoIncrement="true" name="address_id" type="INTEGER">
+            <column autoIncrement="true" name="address_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="address_pkey"/>
             </column>
             <column name="address" type="VARCHAR(50)">
@@ -127,7 +127,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-12">
         <createTable tableName="city">
-            <column autoIncrement="true" name="city_id" type="INTEGER">
+            <column autoIncrement="true" name="city_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="city_pkey"/>
             </column>
             <column name="city" type="VARCHAR(50)">
@@ -146,7 +146,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-14">
         <createTable tableName="country">
-            <column autoIncrement="true" name="country_id" type="INTEGER">
+            <column autoIncrement="true" name="country_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="country_pkey"/>
             </column>
             <column name="country" type="VARCHAR(50)">
@@ -162,7 +162,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-16">
         <createTable tableName="inventory">
-            <column autoIncrement="true" name="inventory_id" type="INTEGER">
+            <column autoIncrement="true" name="inventory_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="inventory_pkey"/>
             </column>
             <column name="film_id" type="SMALLINT">
@@ -181,7 +181,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-18">
         <createTable tableName="language">
-            <column autoIncrement="true" name="language_id" type="INTEGER">
+            <column autoIncrement="true" name="language_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="language_pkey"/>
             </column>
             <column name="name" type="CHAR(20)">
@@ -197,7 +197,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-20">
         <createTable tableName="payment">
-            <column autoIncrement="true" name="payment_id" type="INTEGER">
+            <column autoIncrement="true" name="payment_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="payment_pkey"/>
             </column>
             <column name="customer_id" type="SMALLINT">
@@ -222,7 +222,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-22">
         <createTable tableName="rental">
-            <column autoIncrement="true" name="rental_id" type="INTEGER">
+            <column autoIncrement="true" name="rental_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="rental_pkey"/>
             </column>
             <column name="rental_date" type="TIMESTAMP WITHOUT TIME ZONE">
@@ -248,7 +248,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-24">
         <createTable tableName="staff">
-            <column autoIncrement="true" name="staff_id" type="INTEGER">
+            <column autoIncrement="true" name="staff_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="staff_pkey"/>
             </column>
             <column name="first_name" type="VARCHAR(45)">
@@ -282,7 +282,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-26">
         <createTable tableName="store">
-            <column autoIncrement="true" name="store_id" type="INTEGER">
+            <column autoIncrement="true" name="store_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="store_pkey"/>
             </column>
             <column name="manager_staff_id" type="SMALLINT">
@@ -345,7 +345,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-33">
         <createTable tableName="film">
-            <column autoIncrement="true" name="film_id" type="INTEGER">
+            <column autoIncrement="true" name="film_id" type="SERIAL">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="film_pkey"/>
             </column>
             <column name="title" type="VARCHAR(255)">
