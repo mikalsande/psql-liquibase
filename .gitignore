@@ -1,0 +1,4 @@
+liquibase.properties
+liquibase_diff.txt
+new-schema.sql
+schema.sql

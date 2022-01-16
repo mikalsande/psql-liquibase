@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  paglia:
+    container_name: paglia
+    image: postgres:13
+    ports:
+      - 5555:5432
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+  newdb:
+    container_name: newdb
+    image: postgres:13
+    ports:
+      - 6666:5432
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+
+#  dbeaver:
+#    container_name: dbeaver
+#    image: dbeaver/cloudbeaver:prod
+#    command: -d --restart unless-stopped
+#    ports:
+#      - 8080:8978
