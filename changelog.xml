@@ -535,9 +535,7 @@
         </createIndex>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-50">
-        <createIndex indexName="film_fulltext_idx" tableName="film">
-            <column name="fulltext"/>
-        </createIndex>
+        <sql dbms="all" splitStatements="true" stripComments="true">CREATE INDEX film_fulltext_idx ON film USING gist (fulltext);</sql>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-51">
         <createIndex indexName="idx_fk_language_id" tableName="film">

@@ -324,6 +324,25 @@ Example:
         <addAutoIncrement columnDataType="int" columnName="customer_id" incrementBy="1" startWith="1" tableName="customer"/>
     </changeSet>
 ```
+
+## Add index that use other type than btree
+
+Replace
+```
+    <changeSet author="mikalsande (generated)" id="1642327687659-50">
+        <createIndex indexName="film_fulltext_idx" tableName="film">
+            <column name="fulltext"/>
+        </createIndex>
+    </changeSet>
+```
+
+With
+```
+    <changeSet author="mikalsande (generated)" id="1642327687659-50.1">
+        <sql dbms="all" splitStatements="true" stripComments="true">CREATE INDEX film_fulltext_idx ON film USING gist (fulltext);</sql>
+    </changeSet>
+```
+
 ## Process to create a working changelog
 
 The general process is
