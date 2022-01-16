@@ -286,6 +286,44 @@ Try to apply the changelog to an empty database (newdb).
 make update
 ```
 
+
+## Fix tables that use SERIAL
+
+* Remove `autoIncrement="true"` from the column definition
+* Add an `addAutoIncrement` to the column below the table in the same changeSet
+
+Example:
+```
+    <changeSet author="mikalsande (generated)" id="1642327687659-1">
+        <createTable tableName="customer">
+            <column name="customer_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="customer_pkey"/>
+            </column>
+            <column name="store_id" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(50)"/>
+            <column name="address_id" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="activebool" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="('now'::text)::date" name="create_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="now()" name="last_update" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="active" type="INTEGER"/>
+        </createTable>
+        <addAutoIncrement columnDataType="int" columnName="customer_id" incrementBy="1" startWith="1" tableName="customer"/>
+    </changeSet>
+```
 ## Process to create a working changelog
 
 The general process is

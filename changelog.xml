@@ -5,7 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="mikalsande (generated)" id="1642327687659-1">
         <createTable tableName="customer">
-            <column autoIncrement="true" name="customer_id" type="SERIAL">
+            <column name="customer_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="customer_pkey"/>
             </column>
             <column name="store_id" type="SMALLINT">
@@ -30,13 +30,14 @@
             <column defaultValueComputed="now()" name="last_update" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="active" type="INTEGER"/>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="customer_id" incrementBy="1" startWith="1" tableName="customer"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-2">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="customer_customer_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-3">
         <createTable tableName="actor">
-            <column autoIncrement="true" name="actor_id" type="SERIAL">
+            <column name="actor_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
             </column>
             <column name="first_name" type="VARCHAR(45)">
@@ -49,13 +50,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="actor_id" incrementBy="1" startWith="1" tableName="actor"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-4">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="actor_actor_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-5">
         <createTable tableName="category">
-            <column autoIncrement="true" name="category_id" type="SERIAL">
+            <column name="category_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="category_pkey"/>
             </column>
             <column name="name" type="VARCHAR(25)">
@@ -65,6 +67,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="category_id" incrementBy="1" startWith="1" tableName="category"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-6">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="category_category_id_seq" startValue="1"/>
@@ -100,7 +103,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-10">
         <createTable tableName="address">
-            <column autoIncrement="true" name="address_id" type="SERIAL">
+            <column name="address_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="address_pkey"/>
             </column>
             <column name="address" type="VARCHAR(50)">
@@ -121,13 +124,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="address_id" incrementBy="1" startWith="1" tableName="address"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-11">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="address_address_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-12">
         <createTable tableName="city">
-            <column autoIncrement="true" name="city_id" type="SERIAL">
+            <column name="city_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="city_pkey"/>
             </column>
             <column name="city" type="VARCHAR(50)">
@@ -140,13 +144,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="city_id" incrementBy="1" startWith="1" tableName="city"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-13">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="city_city_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-14">
         <createTable tableName="country">
-            <column autoIncrement="true" name="country_id" type="SERIAL">
+            <column name="country_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="country_pkey"/>
             </column>
             <column name="country" type="VARCHAR(50)">
@@ -156,13 +161,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="country_id" incrementBy="1" startWith="1" tableName="country"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-15">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="country_country_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-16">
         <createTable tableName="inventory">
-            <column autoIncrement="true" name="inventory_id" type="SERIAL">
+            <column name="inventory_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="inventory_pkey"/>
             </column>
             <column name="film_id" type="SMALLINT">
@@ -175,13 +181,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="inventory_id" incrementBy="1" startWith="1" tableName="inventory"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-17">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="inventory_inventory_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-18">
         <createTable tableName="language">
-            <column autoIncrement="true" name="language_id" type="SERIAL">
+            <column name="language_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="language_pkey"/>
             </column>
             <column name="name" type="CHAR(20)">
@@ -191,13 +198,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="language_id" incrementBy="1" startWith="1" tableName="language"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-19">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="language_language_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-20">
         <createTable tableName="payment">
-            <column autoIncrement="true" name="payment_id" type="SERIAL">
+            <column name="payment_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="payment_pkey"/>
             </column>
             <column name="customer_id" type="SMALLINT">
@@ -216,13 +224,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="payment_id" incrementBy="1" startWith="1" tableName="payment"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-21">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="payment_payment_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-22">
         <createTable tableName="rental">
-            <column autoIncrement="true" name="rental_id" type="SERIAL">
+            <column name="rental_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="rental_pkey"/>
             </column>
             <column name="rental_date" type="TIMESTAMP WITHOUT TIME ZONE">
@@ -242,13 +251,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="rental_id" incrementBy="1" startWith="1" tableName="rental"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-23">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="rental_rental_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-24">
         <createTable tableName="staff">
-            <column autoIncrement="true" name="staff_id" type="SERIAL">
+            <column name="staff_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="staff_pkey"/>
             </column>
             <column name="first_name" type="VARCHAR(45)">
@@ -276,13 +286,14 @@
             </column>
             <column name="picture" type="BYTEA"/>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="staff_id" incrementBy="1" startWith="1" tableName="staff"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-25">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="staff_staff_id_seq" startValue="1"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-26">
         <createTable tableName="store">
-            <column autoIncrement="true" name="store_id" type="SERIAL">
+            <column name="store_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="store_pkey"/>
             </column>
             <column name="manager_staff_id" type="SMALLINT">
@@ -295,6 +306,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="store_id" incrementBy="1" startWith="1" tableName="store"/>
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-27">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="store_store_id_seq" startValue="1"/>
@@ -345,7 +357,7 @@
     </changeSet>
     <changeSet author="mikalsande (generated)" id="1642327687659-33">
         <createTable tableName="film">
-            <column autoIncrement="true" name="film_id" type="SERIAL">
+            <column name="film_id" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="film_pkey"/>
             </column>
             <column name="title" type="VARCHAR(255)">
@@ -375,6 +387,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement columnDataType="int" columnName="film_id" incrementBy="1" startWith="1" tableName="film"/>
     </changeSet>
     <changeSet author="manual" id="1642327687659-33.1">
         <sqlFile dbms="all" encoding="utf8" endDelimiter=";" path="function-group_concat.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
